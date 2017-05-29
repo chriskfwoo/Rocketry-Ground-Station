@@ -2,6 +2,7 @@ package Avionics;
 
 import jssc.*;
 
+import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 
 public class JSSC {
     private static SerialPort serialPort;
+    private static ControllerGUI view;
 
     public static void main(String[] args) {
 
@@ -30,7 +32,7 @@ public class JSSC {
         }
 
 //        System.out.println("Type port name, wshich you want to use, and press Enter...");
-//        Scanner in = new Scanner(System.in);s
+//        Scanner in = new Scanner(System.in);
 //        String portName = in.next();
 
         serialPort = new SerialPort("/dev/ttyUSB0");
@@ -45,6 +47,8 @@ public class JSSC {
 
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN |
                     SerialPort.FLOWCONTROL_RTSCTS_OUT);
+
+            view = new ControllerGUI();
 
             serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
 
@@ -68,6 +72,14 @@ public class JSSC {
                             PrintWriter pw = new PrintWriter(new FileWriter("data_logs.csv", true));
                             pw.write(toProcess+"\n");
                             pw.close();
+
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    view.unfiltered(toProcess);  // Or any other JFrame
+                                }
+                            });
+
                             //   Platform.runLater(new Runnable() {
                             //     @Override public void run() {
                             //      processMessage(toProcess);

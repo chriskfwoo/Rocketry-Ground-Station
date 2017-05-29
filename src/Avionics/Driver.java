@@ -35,6 +35,7 @@ public class Driver {
             testAlt += 50;
             testString = testTime+","+Integer.toString(testInt++)+",99325,"+Integer.toString(testAlt)+",4529.8360#N#7334.74137#W,101#101#101,101#101#101";
             testTime+=1000;
+            System.out.println(testString);
             view.unfiltered(testString);
         };
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);

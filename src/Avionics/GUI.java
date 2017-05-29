@@ -26,10 +26,13 @@ public class GUI {
     private JPanel dataPanel;
     private JPanel altitudeGraph;
     private JPanel velocityGraph;
-    private JPanel googleMaps;
+    private JPanel gpsPanel;
     private JLabel logoLabel;
     private JLabel pitotLabel;
     private JLabel baroLabel;
+    private JButton startButton;
+    private JLabel canadalogo;
+    private JPanel gpsMapHelper;
 
 
     public GUI() {
@@ -42,6 +45,7 @@ public class GUI {
         groundStation.setBounds(100, 100, 1250, 850);
         groundStation.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logoLabel.setIcon(new ImageIcon(getClass().getResource("res/logo2.png")));
+        canadalogo.setIcon(new ImageIcon(getClass().getResource("res/canada.png")));
         groundStation.setVisible(true);
 
     }
@@ -54,9 +58,11 @@ public class GUI {
         return velocityGraph;
     }
 
-    public JPanel getGoogleMaps(){
-        return googleMaps;
+    public JPanel getGpsPanel(){
+        return gpsPanel;
     }
+
+    public JPanel getGpsMapHelper() {return gpsMapHelper;}
 
     public void updateLabels(String[] alterPacket){
 

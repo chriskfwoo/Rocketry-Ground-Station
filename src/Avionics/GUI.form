@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Avionics.GUI">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="1084" height="778"/>
+      <xy x="20" y="20" width="1155" height="778"/>
     </constraints>
     <properties>
       <background color="-657957"/>
@@ -24,7 +24,7 @@
             <properties>
               <font name="Monospaced" size="28" style="1"/>
               <foreground color="-1"/>
-              <text value="Space Concordia - Rocketry Division"/>
+              <text value="Space Concordia Rocketry Division - &quot;Maurice the Rocket #9&quot;"/>
             </properties>
           </component>
           <vspacer id="dc4cc">
@@ -37,6 +37,14 @@
               <grid row="2" column="0" row-span="1" col-span="4" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
+          <component id="94763" class="javax.swing.JLabel" binding="canadalogo">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="3b019" binding="southPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
@@ -84,6 +92,29 @@
                 <border type="none"/>
                 <children/>
               </grid>
+            </children>
+          </grid>
+          <grid id="aace5" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints border-constraint="West"/>
+            <properties>
+              <background color="-657957"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <hspacer id="2140b">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="5" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <component id="6b637" class="javax.swing.JButton" binding="startButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Start"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>
@@ -179,7 +210,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                   <component id="eeb5" class="javax.swing.JLabel" binding="accelYLabel">
@@ -190,7 +221,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                   <component id="2ca77" class="javax.swing.JLabel" binding="accelZLabel">
@@ -201,7 +232,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                   <component id="a966b" class="javax.swing.JLabel">
@@ -234,7 +265,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                   <component id="af559" class="javax.swing.JLabel" binding="latitudeLabel">
@@ -245,7 +276,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                   <component id="6d05c" class="javax.swing.JLabel" binding="longitudeLabel">
@@ -256,7 +287,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                   <component id="6ea3e" class="javax.swing.JLabel" binding="gyroXLabel">
@@ -267,7 +298,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                   <component id="3fede" class="javax.swing.JLabel" binding="gyroYLabel">
@@ -278,7 +309,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                   <component id="2988d" class="javax.swing.JLabel" binding="gyroZLabel">
@@ -289,7 +320,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                   <component id="231e6" class="javax.swing.JLabel">
@@ -344,7 +375,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                   <component id="7f1da" class="javax.swing.JLabel" binding="pitotLabel">
@@ -355,19 +386,25 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-13354950"/>
-                      <text value="null"/>
+                      <text value="offline"/>
                     </properties>
                   </component>
                 </children>
               </grid>
-              <grid id="cf890" binding="googleMaps" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="cf890" binding="gpsPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints border-constraint="Center"/>
                 <properties>
                   <background color="-657957"/>
                 </properties>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <vspacer id="f1c16">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </vspacer>
+                </children>
               </grid>
             </children>
           </grid>
