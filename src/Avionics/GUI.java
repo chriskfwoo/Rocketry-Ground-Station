@@ -30,8 +30,9 @@ public class GUI {
     private JLabel logoLabel;
     private JLabel pitotLabel;
     private JLabel baroLabel;
-    private JButton startButton;
     private JLabel canadalogo;
+    private JButton startButton;
+    private JLabel mauriceLogo;
     private JPanel gpsMapHelper;
 
 
@@ -46,6 +47,7 @@ public class GUI {
         groundStation.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logoLabel.setIcon(new ImageIcon(getClass().getResource("res/logo2.png")));
         canadalogo.setIcon(new ImageIcon(getClass().getResource("res/canada.png")));
+        mauriceLogo.setIcon(new ImageIcon(getClass().getResource("res/maurice.png")));
         groundStation.setVisible(true);
 
     }

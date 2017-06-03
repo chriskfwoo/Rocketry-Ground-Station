@@ -59,7 +59,8 @@ public class ControllerGUI extends JFrame {
         gpsPanel.add(gpsChartPanel, BorderLayout.CENTER);
         gpsPanel.setBackground(Color.black);
         gpsPanel.validate();
-      //  map = new JMapViewer();
+
+//        map = new JMapViewer();
 //        JButton button = new JButton("fit");
 //        button.addActionListener(new ActionListener() {
 //
@@ -68,6 +69,7 @@ public class ControllerGUI extends JFrame {
 //            }
 //        });
 //        gpsPanelHelper.add(button);
+
     }
 
     // TODO MAKE SURE TO CHECK FOR CASES IF STRING IS BAD
@@ -94,6 +96,7 @@ public class ControllerGUI extends JFrame {
 
         // pitot
         pitot = filtered[1];
+        // TODO calculate actual value of pitot
         alterFiltered[1] = pitot;
 
         // barometer
@@ -117,19 +120,20 @@ public class ControllerGUI extends JFrame {
         accelx = acceleration[0];
         accely = acceleration[1];
         accelz = acceleration[2];
-        alterFiltered[6] = accelx;
-        alterFiltered[7] = accely;
-        alterFiltered[8] = accelz;
+        // TODO calculate actual value of accel
+        alterFiltered[6] = accelx + "g";
+        alterFiltered[7] = accely + "g";
+        alterFiltered[8] = accelz + "g";
 
         // gyro x,y,z
         String[] gyroscope = filtered[6].split("#");
         gyrox = gyroscope[0];
         gyroy = gyroscope[1];
         gyroz = gyroscope[2];
+        // TODO calculate actual value of gyro
         alterFiltered[9] = gyrox;
         alterFiltered[10] = gyroy;
         alterFiltered[11] = gyroz;
-
 
         longitudeTest += 0.005;
         }catch (Exception e){
@@ -140,6 +144,37 @@ public class ControllerGUI extends JFrame {
             updateVelocityGraph(seconds,60);
             updateMapMark(45.496067, longitudeTest);
         }
+    }
+
+    public static void calculatePitotTube(int range){
+
+        // ADC 3.3
+
+    }
+
+
+    public static void calculateAccelerometer(int xAccel, int yAccel, int zAccel){
+
+        /**
+         * x = xAccel
+         * A = -32768
+         * B = 32767
+         * D =
+         * C =
+         *
+         *
+         *
+         *
+         *
+         */
+        //Range: -32768 to 32767
+        // -16g to 16g
+        //Y = (X-A)/(B-A) * (D-C) + C
+
+    }
+
+    public static void calculateGyroscope(){
+        //Range: -32768 to 32767
 
     }
 
@@ -157,7 +192,7 @@ public class ControllerGUI extends JFrame {
 
     // update map marker
     public void updateMapMark(double lat, double lon) {
-        gGraph.getMap().addMapMarker(new MapMarkerDot(lat,lon));
+        gGraph.updateGpsGraph(lat,lon);
     }
 
 }
