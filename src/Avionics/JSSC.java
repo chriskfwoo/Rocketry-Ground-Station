@@ -31,20 +31,20 @@ public class JSSC {
             System.out.println(portNames[i]);
         }
 
-//        System.out.println("Type port name, wshich you want to use, and press Enter...");
-//        Scanner in = new Scanner(System.in);
-//        String portName = in.next();
+        System.out.println("Type port name, which you want to use, and press Enter...");
+        Scanner in = new Scanner(System.in);
+        String portName = in.next();
 
-        serialPort = new SerialPort("/dev/ttyUSB0");
+        serialPort = new SerialPort(portName);
 
         try {
             serialPort.openPort();
 
+            view = new ControllerGUI();
             serialPort.setParams(SerialPort.BAUDRATE_57600,
                     SerialPort.DATABITS_8,
                     SerialPort.STOPBITS_1,
                     SerialPort.PARITY_NONE);
-
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN |
                     SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
@@ -80,17 +80,11 @@ public class JSSC {
                                 }
                             });
 
-                            //   Platform.runLater(new Runnable() {
-                            //     @Override public void run() {
-                            //      processMessage(toProcess);
-                            //      }
-                            //    });
                             message.setLength(0);
                         }
                         else {
                             //<msTick>,<pitot>,<bar>,<gpsAlt>,<gpsPos>,<accel>,<gyro>
                             //950,2048,99325,167.8,4529.8360#N#7334.74137#W,101#101#101,101#101#101
-                            //System.out.print((char)b);
                             message.append((char)b);
                         }
                     }

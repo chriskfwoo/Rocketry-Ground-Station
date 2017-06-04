@@ -1,8 +1,8 @@
 package Avionics;
 
-import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
 
 /**
  * creates the GUI graphs, filter the packets, update the labels and graphs
@@ -32,7 +32,6 @@ public class ControllerGUI extends JFrame {
         altPanel = gui.getAltitudeGraph();
         velPanel = gui.getVelocityGraphGraph();
         gpsPanel = gui.getGpsPanel();
-        //gpsPanelHelper = gui.getGpsMapHelper();
 
         // setting layout for panels
         altPanel.setLayout(new java.awt.BorderLayout());
@@ -60,16 +59,6 @@ public class ControllerGUI extends JFrame {
         gpsPanel.setBackground(Color.black);
         gpsPanel.validate();
 
-//        map = new JMapViewer();
-//        JButton button = new JButton("fit");
-//        button.addActionListener(new ActionListener() {
-//
-//            public void actionPerformed(ActionEvent e) {
-//                map.setDisplayToFitMapMarkers();
-//            }
-//        });
-//        gpsPanelHelper.add(button);
-
     }
 
     // TODO MAKE SURE TO CHECK FOR CASES IF STRING IS BAD
@@ -92,7 +81,7 @@ public class ControllerGUI extends JFrame {
         // timestamp (ms)
         timestamp = filtered[0];
         seconds = Double.parseDouble(timestamp) / 1000.0;
-        alterFiltered[0] = timestamp;
+        alterFiltered[0] = Double.toString(seconds);
 
         // pitot
         pitot = filtered[1];
@@ -120,20 +109,26 @@ public class ControllerGUI extends JFrame {
         accelx = acceleration[0];
         accely = acceleration[1];
         accelz = acceleration[2];
-        // TODO calculate actual value of accel
-        alterFiltered[6] = accelx + "g";
-        alterFiltered[7] = accely + "g";
-        alterFiltered[8] = accelz + "g";
+        // TODO calculate actual value of accel Calculations.calculateAcceleration();
+        BigDecimal Ax = Calculations.calculateAcceleration(Integer.parseInt(accelx));
+        BigDecimal Ay = Calculations.calculateAcceleration(Integer.parseInt(accely));
+        BigDecimal Az = Calculations.calculateAcceleration(Integer.parseInt(accelz));
+        alterFiltered[6] = Ax + "g";
+        alterFiltered[7] = Ay + "g";
+        alterFiltered[8] = Az + "g";
 
         // gyro x,y,z
         String[] gyroscope = filtered[6].split("#");
         gyrox = gyroscope[0];
         gyroy = gyroscope[1];
         gyroz = gyroscope[2];
-        // TODO calculate actual value of gyro
-        alterFiltered[9] = gyrox;
-        alterFiltered[10] = gyroy;
-        alterFiltered[11] = gyroz;
+        // TODO calculate actual value of gyro Calculations.calculateGyroscope();
+        BigDecimal Gx = Calculations.calculateGyroscope(Integer.parseInt(gyrox));
+        BigDecimal Gy = Calculations.calculateGyroscope(Integer.parseInt(gyroy));
+        BigDecimal Gz = Calculations.calculateGyroscope(Integer.parseInt(gyroz));
+        alterFiltered[9] = Gx +"";
+        alterFiltered[10] = Gy + "";
+        alterFiltered[11] = Gz + "";
 
         longitudeTest += 0.005;
         }catch (Exception e){
@@ -144,37 +139,6 @@ public class ControllerGUI extends JFrame {
             updateVelocityGraph(seconds,60);
             updateMapMark(45.496067, longitudeTest);
         }
-    }
-
-    public static void calculatePitotTube(int range){
-
-        // ADC 3.3
-
-    }
-
-
-    public static void calculateAccelerometer(int xAccel, int yAccel, int zAccel){
-
-        /**
-         * x = xAccel
-         * A = -32768
-         * B = 32767
-         * D =
-         * C =
-         *
-         *
-         *
-         *
-         *
-         */
-        //Range: -32768 to 32767
-        // -16g to 16g
-        //Y = (X-A)/(B-A) * (D-C) + C
-
-    }
-
-    public static void calculateGyroscope(){
-        //Range: -32768 to 32767
 
     }
 
