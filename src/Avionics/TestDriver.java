@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TestDriver {
 
-    private static GUIController gui;
+    private static GUIController guiController;
     private static Date date= Calendar.getInstance().getTime();
 
     // test variables
@@ -26,7 +26,7 @@ public class TestDriver {
     private static PrintWriter pw;
     public static void main(String[] args) {
 
-        gui = new GUIController();
+        guiController = new GUIController();
 
         // for production
         // File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
@@ -61,7 +61,7 @@ public class TestDriver {
             System.out.println(testString);
 
             // parse to GUI
-            gui.unfiltered(testString);
+            guiController.unfiltered(testString);
             pw.write(testString+"\n");
             pw.close();
         };

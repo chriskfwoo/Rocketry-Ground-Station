@@ -3,143 +3,88 @@ package Avionics;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 
 /**
- * controller for the GUI, filter the packets, updating the labels and graphs
+ * controller for the GUI, passing the data to the model and updating the view
  */
 public class GUIController extends JFrame {
 
+    private static GUIView view;
     private static GUIModel model;
 
+    // string array to display GUI labels
+    private static String[] alterFiltered;
+
     // variables for GUI
-    private String timestamp, pitot, barometer, altitude,latitude,longitude,accelx,accely,accelz,gyrox,gyroy,gyroz;
-    private double seconds, altValue, totalA;
+    private double totalA,seconds,altValue,accelx,accely,accelz;
 
     // testing variable
     static double longitudeTest = -73.569315;
 
     public GUIController(){
 
+        // creating GUI view and model
+        view = new GUIView();
         model = new GUIModel();
 
-        // reset all graphs on click
-        model.getGui().getResetBtn().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                model.getaGraph().clear();
-                model.getTaGraph().clear();
-                model.getgGraph().clear();
-            }
-        } );
-
-        // fit all markers on the gps graph on click
-        model.getGui().getFitMarkersBtn().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                model.getgGraph().seeMakers();
-            }
-        } );
+        // listeners
+        view.addResetListener(new ResetListener());
+        view.addFitListener(new FitListener());
 
     }
 
-    // split the string into array and modify it to display on GUI
+    // reset all graphs on click
+    class ResetListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            view.clearAllGraphs();
+        }
+    }
+
+    // fit all markers on the gps graph on click
+    class FitListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            view.fitGpsMarkers();
+        }
+    }
+
+    // pass unfilered data to the model and update the view
     public void unfiltered (String unfiltered){
 
         /*** format of the packet
          0          1      2      3                4    5              6  7  8          9 10  11
          <msTick>,<pitot>,<bar>,<gpsAlt>,          <gpsPos>,            <accel>,         <gyro>
-         950,     2048,   99325, 167.8,   4529.8360#N#7334.74137#W,  101#101#101,     101#101#101
          */
-
-        // parsing the packet
-        String[] filtered = unfiltered.split(",");
-
-        // modifying the filtered array to properly display on GUI
-        String[] alterFiltered = new String[12];
 
         try{
 
-        // timestamp (ms)
-        timestamp = filtered[0];
-        seconds = Double.parseDouble(timestamp) / 1000.0;
-        alterFiltered[0] = Double.toString(seconds) +"s";
+        // pass to the GUI Model parsing
+        alterFiltered = model.parsing(unfiltered);
 
-        // pitot
-        pitot = filtered[1];
-        // TODO calculate actual value of pitot
-        alterFiltered[1] = pitot;
+        // variables to update GUI View
+        seconds = Double.parseDouble(alterFiltered[0]);
+        altValue = Double.parseDouble(alterFiltered[3]);
+        accelx = Double.parseDouble(alterFiltered[6]);
+        accely = Double.parseDouble(alterFiltered[7]);
+        accelz = Double.parseDouble(alterFiltered[8]);
 
-        // barometer
-        barometer = filtered[2];
-        alterFiltered[2] = barometer + " Pa";
-
-        // altitude
-        altitude = filtered[3];
-        altValue = Double.parseDouble(altitude);
-        alterFiltered[3] = altitude;
-
-        // GPS lat,long
-        String[] latlong = filtered[4].split("#");
-        latitude = latlong[0] + " " + latlong[1];
-        longitude = latlong[2] + " " + latlong[3];
-        alterFiltered[4] = latitude;
-        alterFiltered[5] = longitude;
-
-        // acceleration x,y,z
-        String[] acceleration = filtered[5].split("#");
-        accelx = acceleration[0];
-        accely = acceleration[1];
-        accelz = acceleration[2];
-        // convert to acceleration unit
-        double Ax = Calculations.calculateAcceleration(Integer.parseInt(accelx));
-        double Ay = Calculations.calculateAcceleration(Integer.parseInt(accely));
-        double Az = Calculations.calculateAcceleration(Integer.parseInt(accelz));
-        totalA = Calculations.calculatetotalAcceleration(Ax, Ay, Az);
-        alterFiltered[6] = String.format("%.3f", Ax) + "g";
-        alterFiltered[7] = String.format("%.3f", Ay) + "g";
-        alterFiltered[8] = String.format("%.3f", Az) + "g";
-
-        // gyro x,y,z
-        String[] gyroscope = filtered[6].split("#");
-        gyrox = gyroscope[0];
-        gyroy = gyroscope[1];
-        gyroz = gyroscope[2];
-        // TODO calculate actual value of gyro
-        BigDecimal Gx = Calculations.calculateGyroscope(Integer.parseInt(gyrox));
-        BigDecimal Gy = Calculations.calculateGyroscope(Integer.parseInt(gyroy));
-        BigDecimal Gz = Calculations.calculateGyroscope(Integer.parseInt(gyroz));
-        alterFiltered[9] = Gx +"";
-        alterFiltered[10] = Gy + "";
-        alterFiltered[11] = Gz + "";
+        // GUI Model to calculate total acceleration
+        totalA = model.calculatetotalAcceleration(accelx, accely, accelz);
 
         // testing purpose
         longitudeTest += 0.005;
+
         }catch (Exception e){
-            System.out.println("error was caught");
+            System.out.println("error was caught while parsing");
         }finally {
 
-            // updating the graph components
-            model.getGui().updateLabels(alterFiltered);
-            updateAltitudeGraph(seconds, altValue);
-            updateAccelerationGraph(seconds,totalA);
+            // updating GUI view
+            view.updateGUILabels(alterFiltered);
+            view.updateAltitudeGraph(seconds, altValue);
+            view.updateAccelerationGraph(seconds,totalA);
             // TODO actual value of GPS
-            updateMapMark(45.496067, longitudeTest);
+            view.updateMapMark(45.496067, longitudeTest);
         }
-    }
-
-    // update alt graph
-    public void updateAltitudeGraph(double time, double alt){
-        model.getaGraph().updateAltitudeGraph(time,alt);
-        // model.getAltPanel().repaint();
-    }
-
-    // update total acceleration graph
-    public void updateAccelerationGraph(double time, double ta){
-        model.getTaGraph().updateAccelerationGraph(time,ta);
-        // model.getAccelPanel().repaint();
-    }
-
-    // update map marker
-    public void updateMapMark(double lat, double lon) {
-        model.getgGraph().updateGpsGraph(lat,lon);
     }
 }

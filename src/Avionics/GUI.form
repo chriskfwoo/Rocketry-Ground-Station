@@ -183,7 +183,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-8388608"/>
-                      <text value="Acceleration X:"/>
+                      <text value="Acceleration X (g):"/>
                     </properties>
                   </component>
                   <component id="8a211" class="javax.swing.JLabel">
@@ -194,7 +194,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-8388608"/>
-                      <text value="Acceleration Y:"/>
+                      <text value="Acceleration Y (g):"/>
                     </properties>
                   </component>
                   <component id="cbbdd" class="javax.swing.JLabel">
@@ -205,7 +205,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-8388608"/>
-                      <text value="Acceleration Z:"/>
+                      <text value="Acceleration Z (g):"/>
                     </properties>
                   </component>
                   <component id="bd10c" class="javax.swing.JLabel" binding="accelXLabel">
@@ -359,7 +359,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-8388608"/>
-                      <text value="Barometer:"/>
+                      <text value="Barometer (Pa):"/>
                     </properties>
                   </component>
                   <component id="1d410" class="javax.swing.JLabel">
@@ -403,7 +403,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-8388608"/>
-                      <text value="Time:"/>
+                      <text value="Time (s):"/>
                     </properties>
                   </component>
                   <component id="c32d" class="javax.swing.JLabel" binding="timeLabel">
