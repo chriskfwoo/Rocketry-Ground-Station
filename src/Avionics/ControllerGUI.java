@@ -1,8 +1,8 @@
 package Avionics;
 
-import Avionics.Graphs.AccelerationGraph;
-import Avionics.Graphs.AltitudeGraph;
-import Avionics.Graphs.GpsGraph;
+import Avionics.graphs.AccelerationGraph;
+import Avionics.graphs.AltitudeGraph;
+import Avionics.graphs.GpsGraph;
 
 import javax.swing.*;
 import java.awt.*;

@@ -29,8 +29,12 @@ public class JSSC {
 
         // writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
         // saved at location of JAR
-        File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        file = new File(jarFile.getParentFile().getParent(), "/logs/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+
+        // File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        // file = new File(jarFile.getParentFile().getParent(), "/logs/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+
+        // for testing
+        file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
 
         try {
             writer = new FileWriter(file, true);

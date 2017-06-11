@@ -1,8 +1,7 @@
-package Avionics.Graphs;
+package Avionics.graphs;
 
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
-import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 
 import javax.swing.*;
 

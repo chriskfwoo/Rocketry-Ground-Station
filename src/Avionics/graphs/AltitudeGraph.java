@@ -1,4 +1,4 @@
-package Avionics.Graphs;
+package Avionics.graphs;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -13,9 +13,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Creating the acceleration graph panel for GUI
+ * Creating the altitude graph panel for GUI
  */
-public class AccelerationGraph {
+public class AltitudeGraph {
 
     private  XYSeries series1;
 
@@ -25,7 +25,7 @@ public class AccelerationGraph {
         // creating the graph
         String chartTitle = "";
         String xAxisLabel = "Time(s)";
-        String yAxisLabel = "Acceleration (g)";
+        String yAxisLabel = "Altitude";
 
         XYDataset dataset = createDataset();
         JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
@@ -38,7 +38,7 @@ public class AccelerationGraph {
         plot.setBackgroundPaint(new Color(204,204,204));
         ValueAxis yAxis = plot.getRangeAxis();
         ValueAxis xAxis = plot.getDomainAxis();
-        yAxis.setRange(-12, 12);
+        yAxis.setRange(1, 12000);
         Font font = new Font("Monospace", Font.PLAIN, 12);
         yAxis.setTickLabelFont(font);
         xAxis.setTickLabelFont(font);
@@ -49,15 +49,20 @@ public class AccelerationGraph {
     // creating the dataset
     public  XYDataset createDataset() {
         XYSeriesCollection dataset = new XYSeriesCollection();
-        series1 = new XYSeries("Object 1");
+        series1 = new XYSeries("Altitude");
         series1.add(0, 0);
         dataset.addSeries(series1);
+
+        // to add another dataset
+        // XYSeries series2 = new XYSeries("Object 2");
+        // series2.add(2.0, 1.0);
+        // dataset.addSeries(series2);
 
         return dataset;
     }
 
     // adding data to the dataset
-    public  void updateAccelerationGraph(double time, double ta){
+    public  void updateAltitudeGraph(double time, double ta){
         series1.add(time,ta);
     }
 
@@ -66,3 +71,4 @@ public class AccelerationGraph {
     }
 
 }
+
