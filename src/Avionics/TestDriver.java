@@ -28,12 +28,16 @@ public class TestDriver {
 
         guiController = new GUIController();
 
-        // for production
+        /**
+         * writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
+         */
+
+        // for production saved at location of executable JAR
         // File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        // file = new File(jarFile.getParentFile().getParent(), "data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+        // file = new File(jarFile.getParentFile().getParent(), "/logs/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
 
         // for testing
-        file = new File("./src/Avionics/logs/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+        file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
 
         try {
             writer = new FileWriter(file, true);
@@ -60,7 +64,7 @@ public class TestDriver {
             testTime+=1000;
             System.out.println(testString);
 
-            // parse to GUI
+            // GUI controller
             guiController.unfiltered(testString);
             pw.write(testString+"\n");
             pw.close();

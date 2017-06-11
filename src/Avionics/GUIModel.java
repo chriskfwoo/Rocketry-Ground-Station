@@ -14,7 +14,7 @@ public class GUIModel {
 
     // variables for GUI
     private static String timestamp, pitot, barometer, altitude,latitude,longitude,accelx,accely,accelz,gyrox,gyroy,gyroz;
-    private static double seconds, altValue, totalA;
+    private static double seconds;
 
     public static double calculateAcceleration(int value){
         // range: -32768 to 32767
@@ -23,7 +23,7 @@ public class GUIModel {
         return answer;
     }
 
-    public static double calculatetotalAcceleration(double x, double y, double z){
+    public static double calculateTotalAcceleration(double x, double y, double z){
         // total acceleration = sqrt(x^2 + y^2 + z^2)
         double answer = Math.sqrt(Math.pow(x,2) + Math.pow(y,2) + Math.pow(z,2));
         return answer;
@@ -71,7 +71,6 @@ public class GUIModel {
 
             // altitude
             altitude = filtered[3];
-            altValue = Double.parseDouble(altitude);
             alterFiltered[3] = altitude;
 
             // GPS lat,long
@@ -90,7 +89,6 @@ public class GUIModel {
             double Ax = calculateAcceleration(Integer.parseInt(accelx));
             double Ay = calculateAcceleration(Integer.parseInt(accely));
             double Az = calculateAcceleration(Integer.parseInt(accelz));
-            totalA = calculatetotalAcceleration(Ax, Ay, Az);
             alterFiltered[6] = String.format("%.3f", Ax);
             alterFiltered[7] = String.format("%.3f", Ay);
             alterFiltered[8] = String.format("%.3f", Az);

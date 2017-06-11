@@ -12,11 +12,11 @@ public class GUIController extends JFrame {
     private static GUIView view;
     private static GUIModel model;
 
-    // string array to display GUI labels
-    private static String[] alterFiltered;
-
     // variables for GUI
     private double totalA,seconds,altValue,accelx,accely,accelz;
+
+    // string array to display GUI labels
+    private static String[] alterFiltered;
 
     // testing variable
     static double longitudeTest = -73.569315;
@@ -34,7 +34,7 @@ public class GUIController extends JFrame {
     }
 
     // reset all graphs on click
-    class ResetListener implements ActionListener{
+    private static class ResetListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             view.clearAllGraphs();
@@ -42,7 +42,7 @@ public class GUIController extends JFrame {
     }
 
     // fit all markers on the gps graph on click
-    class FitListener implements ActionListener{
+    private static class FitListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             view.fitGpsMarkers();
@@ -62,7 +62,7 @@ public class GUIController extends JFrame {
         // pass to the GUI Model parsing
         alterFiltered = model.parsing(unfiltered);
 
-        // variables to update GUI View
+        // variables to update GUI View graphs
         seconds = Double.parseDouble(alterFiltered[0]);
         altValue = Double.parseDouble(alterFiltered[3]);
         accelx = Double.parseDouble(alterFiltered[6]);
@@ -70,7 +70,7 @@ public class GUIController extends JFrame {
         accelz = Double.parseDouble(alterFiltered[8]);
 
         // GUI Model to calculate total acceleration
-        totalA = model.calculatetotalAcceleration(accelx, accely, accelz);
+        totalA = model.calculateTotalAcceleration(accelx, accely, accelz);
 
         // testing purpose
         longitudeTest += 0.005;

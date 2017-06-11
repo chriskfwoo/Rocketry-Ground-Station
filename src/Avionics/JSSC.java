@@ -16,25 +16,26 @@ import java.util.Scanner;
  * JAVA SIMPLE SERIAL CONNECTOR - READ COMMUNICATION FROM ROCKET - MAIN DRIVER
  */
 public class JSSC {
+
     private static SerialPort serialPort;
     private static GUIController guiController;
     private static File file;
     private static FileWriter writer;
     private static PrintWriter pw;
-
     private static Date date= Calendar.getInstance().getTime();
-
 
     public static void main(String[] args) {
 
-        // writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
-        // saved at location of JAR
+        /**
+         * writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
+         */
 
-        // File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        // file = new File(jarFile.getParentFile().getParent(), "/logs/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+        // for production saved at location of executable JAR
+        File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        file = new File(jarFile.getParentFile().getParent(), "/logs/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
 
         // for testing
-        file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+        //file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
 
         try {
             writer = new FileWriter(file, true);
@@ -68,8 +69,9 @@ public class JSSC {
         serialPort = new SerialPort(portName);
 
         try {
-            serialPort.openPort();
 
+            // setting up serial port
+            serialPort.openPort();
             serialPort.setParams(SerialPort.BAUDRATE_57600,
                     SerialPort.DATABITS_8,
                     SerialPort.STOPBITS_1,
@@ -77,6 +79,7 @@ public class JSSC {
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN |
                     SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
+            // initializing GUI controller
             guiController = new GUIController();
 
             serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
@@ -94,7 +97,11 @@ public class JSSC {
                 try {
                     byte buffer[] = serialPort.readBytes();
                     for (byte b: buffer) {
+
+                        // end of packet
                         if ( (b == '\r' || b == '\n') && message.length() > 0) {
+
+                            // one packet
                             String toProcess = message.toString();
                             System.out.println(toProcess);
 
@@ -104,6 +111,7 @@ public class JSSC {
 
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
+                                // GUI Controller
                                 public void run() {
                                     guiController.unfiltered(toProcess);
                                 }
