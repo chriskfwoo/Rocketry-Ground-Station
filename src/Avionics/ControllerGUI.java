@@ -1,7 +1,13 @@
 package Avionics;
 
+import Avionics.Graphs.AccelerationGraph;
+import Avionics.Graphs.AltitudeGraph;
+import Avionics.Graphs.GpsGraph;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
 /**
@@ -10,17 +16,17 @@ import java.math.BigDecimal;
 public class ControllerGUI extends JFrame {
 
     private GUI gui;
-    private VelocityGraph vGraph;
+    private AccelerationGraph taGraph;
     private AltitudeGraph aGraph;
     private GpsGraph gGraph;
 
     private JPanel altPanel;
-    private JPanel velPanel;
+    private JPanel accelPanel;
     private JPanel gpsPanel;
 
     // variables for GUI
     private String timestamp, pitot, barometer, altitude,latitude,longitude,accelx,accely,accelz,gyrox,gyroy,gyroz;
-    private double seconds, altValue;
+    private double seconds, altValue, totalA;
 
     // testing variable
     static double longitudeTest = -73.569315;
@@ -30,19 +36,19 @@ public class ControllerGUI extends JFrame {
         //  getting GUI Graph Panels
         gui = new GUI();
         altPanel = gui.getAltitudeGraph();
-        velPanel = gui.getVelocityGraphGraph();
+        accelPanel = gui.getAccelerationGraph();
         gpsPanel = gui.getGpsPanel();
 
         // setting layout for panels
         altPanel.setLayout(new java.awt.BorderLayout());
-        velPanel.setLayout(new java.awt.BorderLayout());
+        accelPanel.setLayout(new java.awt.BorderLayout());
         gpsPanel.setLayout(new java.awt.BorderLayout());
 
         // creating graphs for panels
         aGraph = new AltitudeGraph();
         JPanel altChartPanel = aGraph.createChartPanel();
-        vGraph = new VelocityGraph();
-        JPanel velChartPanel = vGraph.createChartPanel();
+        taGraph = new AccelerationGraph();
+        JPanel taChartPanel = taGraph.createChartPanel();
         gGraph = new GpsGraph();
         JPanel gpsChartPanel = gGraph.getMap();
 
@@ -50,18 +56,31 @@ public class ControllerGUI extends JFrame {
         altPanel.add(altChartPanel, BorderLayout.CENTER);
         altPanel.setBackground(Color.black);
         altPanel.validate();
-
-        velPanel.add(velChartPanel, BorderLayout.CENTER);
-        velPanel.setBackground(Color.black);
-        velPanel.validate();
-
+        accelPanel.add(taChartPanel, BorderLayout.CENTER);
+        accelPanel.setBackground(Color.black);
+        accelPanel.validate();
         gpsPanel.add(gpsChartPanel, BorderLayout.CENTER);
         gpsPanel.setBackground(Color.black);
         gpsPanel.validate();
 
+        // reset all graphs on click
+        gui.getResetBtn().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                aGraph.clear();
+                taGraph.clear();
+                gGraph.clear();
+            }
+        } );
+
+        // fit all markers on the gps graph on click
+        gui.getFitMarkersBtn().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gGraph.seeMakers();
+            }
+        } );
+
     }
 
-    // TODO MAKE SURE TO CHECK FOR CASES IF STRING IS BAD
     // split the string into array and modify it to display on GUI
     public void unfiltered (String unfiltered){
 
@@ -71,6 +90,7 @@ public class ControllerGUI extends JFrame {
          950,     2048,   99325, 167.8,   4529.8360#N#7334.74137#W,  101#101#101,     101#101#101
          */
 
+        // parsing the packet
         String[] filtered = unfiltered.split(",");
 
         // modifying the filtered array to properly display on GUI
@@ -81,7 +101,7 @@ public class ControllerGUI extends JFrame {
         // timestamp (ms)
         timestamp = filtered[0];
         seconds = Double.parseDouble(timestamp) / 1000.0;
-        alterFiltered[0] = Double.toString(seconds);
+        alterFiltered[0] = Double.toString(seconds) +"s";
 
         // pitot
         pitot = filtered[1];
@@ -109,20 +129,21 @@ public class ControllerGUI extends JFrame {
         accelx = acceleration[0];
         accely = acceleration[1];
         accelz = acceleration[2];
-        // TODO calculate actual value of accel Calculations.calculateAcceleration();
-        BigDecimal Ax = Calculations.calculateAcceleration(Integer.parseInt(accelx));
-        BigDecimal Ay = Calculations.calculateAcceleration(Integer.parseInt(accely));
-        BigDecimal Az = Calculations.calculateAcceleration(Integer.parseInt(accelz));
-        alterFiltered[6] = Ax + "g";
-        alterFiltered[7] = Ay + "g";
-        alterFiltered[8] = Az + "g";
+        // convert to acceleration unit
+        double Ax = Calculations.calculateAcceleration(Integer.parseInt(accelx));
+        double Ay = Calculations.calculateAcceleration(Integer.parseInt(accely));
+        double Az = Calculations.calculateAcceleration(Integer.parseInt(accelz));
+        totalA = Calculations.calculatetotalAcceleration(Ax, Ay, Az);
+        alterFiltered[6] = String.format("%.3f", Ax) + "g";
+        alterFiltered[7] = String.format("%.3f", Ay) + "g";
+        alterFiltered[8] = String.format("%.3f", Az) + "g";
 
         // gyro x,y,z
         String[] gyroscope = filtered[6].split("#");
         gyrox = gyroscope[0];
         gyroy = gyroscope[1];
         gyroz = gyroscope[2];
-        // TODO calculate actual value of gyro Calculations.calculateGyroscope();
+        // TODO calculate actual value of gyro
         BigDecimal Gx = Calculations.calculateGyroscope(Integer.parseInt(gyrox));
         BigDecimal Gy = Calculations.calculateGyroscope(Integer.parseInt(gyroy));
         BigDecimal Gz = Calculations.calculateGyroscope(Integer.parseInt(gyroz));
@@ -134,29 +155,29 @@ public class ControllerGUI extends JFrame {
         }catch (Exception e){
             System.out.println("error was caught");
         }finally {
+            // updating the graph components
             gui.updateLabels(alterFiltered);
             updateAltitudeGraph(seconds, altValue);
-            updateVelocityGraph(seconds,60);
+            updateAccelerationGraph(seconds,totalA);
+            // TODO actual value of GPS
             updateMapMark(45.496067, longitudeTest);
         }
-
     }
 
     // update alt graph
-    public void updateAltitudeGraph(double time, double velocity){
-        aGraph.updateAltitudeGraph(time,velocity);
+    public void updateAltitudeGraph(double time, double alt){
+        aGraph.updateAltitudeGraph(time,alt);
         altPanel.repaint();
     }
 
-    // update velocity graph
-    public void updateVelocityGraph(double time, double velocity){
-        vGraph.updateVelocityGraph(time,velocity);
-        velPanel.repaint();
+    // update total acceleration graph
+    public void updateAccelerationGraph(double time, double ta){
+        taGraph.updateAccelerationGraph(time,ta);
+        accelPanel.repaint();
     }
 
     // update map marker
     public void updateMapMark(double lat, double lon) {
         gGraph.updateGpsGraph(lat,lon);
     }
-
 }

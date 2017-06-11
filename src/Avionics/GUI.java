@@ -5,7 +5,7 @@ import javax.swing.*;
 
 /**
  * Initializing the GUI
- * Created by Woozzie on 2/10/2017.
+ * Created by Chris Woo 2/10/2017.
  */
 public class GUI {
 
@@ -25,14 +25,16 @@ public class GUI {
     private JLabel gyroZLabel;
     private JPanel dataPanel;
     private JPanel altitudeGraph;
-    private JPanel velocityGraph;
+    private JPanel accelerationGraph;
     private JPanel gpsPanel;
     private JLabel logoLabel;
     private JLabel pitotLabel;
     private JLabel baroLabel;
     private JLabel canadalogo;
-    private JButton startButton;
+    private JButton fitMarkersBtn;
     private JLabel mauriceLogo;
+    private JButton resetBtn;
+    private JLabel timeLabel;
     private JPanel gpsMapHelper;
 
 
@@ -52,23 +54,33 @@ public class GUI {
 
     }
 
+    public JButton getFitMarkersBtn(){
+        return fitMarkersBtn;
+    }
+
+    public JButton getResetBtn(){
+        return resetBtn;
+    }
+
     public JPanel getAltitudeGraph(){
         return altitudeGraph;
     }
 
-    public JPanel getVelocityGraphGraph(){
-        return velocityGraph;
+    public JPanel getAccelerationGraph(){
+        return accelerationGraph;
     }
 
     public JPanel getGpsPanel(){
         return gpsPanel;
     }
-
-    public JPanel getGpsMapHelper() {return gpsMapHelper;}
+    public JPanel getGpsMapHelper() {
+        return gpsMapHelper;
+    }
 
     public void updateLabels(String[] alterPacket){
 
-        // TODO determine array order and handle edge cases
+        // time
+        timeLabel.setText(alterPacket[0]);
         // pitot
         pitotLabel.setText(alterPacket[1]);
         // baro

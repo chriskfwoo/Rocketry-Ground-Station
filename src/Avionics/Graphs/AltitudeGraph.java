@@ -1,4 +1,4 @@
-package Avionics;
+package Avionics.Graphs;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -13,9 +13,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Creating the velocity graph panel for GUI
+ * Creating the altitude graph panel for GUI
  */
-public class VelocityGraph {
+public class AltitudeGraph {
 
     private  XYSeries series1;
 
@@ -25,7 +25,7 @@ public class VelocityGraph {
         // creating the graph
         String chartTitle = "";
         String xAxisLabel = "Time(s)";
-        String yAxisLabel = "Velocity (m/s)";
+        String yAxisLabel = "Altitude";
 
         XYDataset dataset = createDataset();
         JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
@@ -38,7 +38,7 @@ public class VelocityGraph {
         plot.setBackgroundPaint(new Color(204,204,204));
         ValueAxis yAxis = plot.getRangeAxis();
         ValueAxis xAxis = plot.getDomainAxis();
-        yAxis.setRange(-100, 100);
+        yAxis.setRange(1, 12000);
         Font font = new Font("Monospace", Font.PLAIN, 12);
         yAxis.setTickLabelFont(font);
         xAxis.setTickLabelFont(font);
@@ -49,16 +49,26 @@ public class VelocityGraph {
     // creating the dataset
     public  XYDataset createDataset() {
         XYSeriesCollection dataset = new XYSeriesCollection();
-        series1 = new XYSeries("Object 1");
+        series1 = new XYSeries("Altitude");
         series1.add(0, 0);
         dataset.addSeries(series1);
+
+        // to add another dataset
+        // XYSeries series2 = new XYSeries("Object 2");
+        // series2.add(2.0, 1.0);
+        // dataset.addSeries(series2);
 
         return dataset;
     }
 
     // adding data to the dataset
-    public  void updateVelocityGraph(double time, double velocity){
-        series1.add(time,velocity);
+    public  void updateAltitudeGraph(double time, double ta){
+        series1.add(time,ta);
+    }
+
+    public void clear(){
+        series1.clear();
     }
 
 }
+

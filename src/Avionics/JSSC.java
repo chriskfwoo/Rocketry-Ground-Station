@@ -3,16 +3,41 @@ package Avionics;
 import jssc.*;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
+
+/**
+ * JAVA SIMPLE SERIAL CONNECTOR - READ COMMUNICATION FROM ROCKET - MAIN DRIVER
+ */
 public class JSSC {
     private static SerialPort serialPort;
     private static ControllerGUI view;
+    private static File file;
+    private static FileWriter writer;
+    private static PrintWriter pw;
+
+    private static Date date= Calendar.getInstance().getTime();
+
 
     public static void main(String[] args) {
+
+        // writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
+        // saved at location of JAR
+        File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        file = new File(jarFile.getParentFile().getParent(), "/logs/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+
+        try {
+            writer = new FileWriter(file, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        pw = new PrintWriter(writer);
 
         // getting serial ports list into the array
         String[] portNames = SerialPortList.getPortNames();
@@ -31,6 +56,7 @@ public class JSSC {
             System.out.println(portNames[i]);
         }
 
+        // must copy exact string
         System.out.println("Type port name, which you want to use, and press Enter...");
         Scanner in = new Scanner(System.in);
         String portName = in.next();
@@ -40,7 +66,6 @@ public class JSSC {
         try {
             serialPort.openPort();
 
-            view = new ControllerGUI();
             serialPort.setParams(SerialPort.BAUDRATE_57600,
                     SerialPort.DATABITS_8,
                     SerialPort.STOPBITS_1,
@@ -69,14 +94,14 @@ public class JSSC {
                             String toProcess = message.toString();
                             System.out.println(toProcess);
 
-                            PrintWriter pw = new PrintWriter(new FileWriter("data_logs.csv", true));
+                            // write to file
                             pw.write(toProcess+"\n");
                             pw.close();
 
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    view.unfiltered(toProcess);  // Or any other JFrame
+                                    view.unfiltered(toProcess);
                                 }
                             });
 
@@ -84,15 +109,12 @@ public class JSSC {
                         }
                         else {
                             //<msTick>,<pitot>,<bar>,<gpsAlt>,<gpsPos>,<accel>,<gyro>
-                            //950,2048,99325,167.8,4529.8360#N#7334.74137#W,101#101#101,101#101#101
                             message.append((char)b);
                         }
                     }
                 }
                 catch (SerialPortException ex) {
                     System.out.println(ex);
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         }
