@@ -1,28 +1,16 @@
 package Avionics;
 
-import Avionics.graphs.AccelerationGraph;
-import Avionics.graphs.AltitudeGraph;
-import Avionics.graphs.GpsGraph;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
 /**
- * creates the GUI graphs, filter the packets, update the labels and graphs
+ * controller for the GUI, filter the packets, updating the labels and graphs
  */
-public class ControllerGUI extends JFrame {
+public class GUIController extends JFrame {
 
-    private GUI gui;
-    private AccelerationGraph taGraph;
-    private AltitudeGraph aGraph;
-    private GpsGraph gGraph;
-
-    private JPanel altPanel;
-    private JPanel accelPanel;
-    private JPanel gpsPanel;
+    private static GUIModel model;
 
     // variables for GUI
     private String timestamp, pitot, barometer, altitude,latitude,longitude,accelx,accely,accelz,gyrox,gyroy,gyroz;
@@ -31,51 +19,23 @@ public class ControllerGUI extends JFrame {
     // testing variable
     static double longitudeTest = -73.569315;
 
-    public ControllerGUI(){
+    public GUIController(){
 
-        //  getting GUI Graph Panels
-        gui = new GUI();
-        altPanel = gui.getAltitudeGraph();
-        accelPanel = gui.getAccelerationGraph();
-        gpsPanel = gui.getGpsPanel();
-
-        // setting layout for panels
-        altPanel.setLayout(new java.awt.BorderLayout());
-        accelPanel.setLayout(new java.awt.BorderLayout());
-        gpsPanel.setLayout(new java.awt.BorderLayout());
-
-        // creating graphs for panels
-        aGraph = new AltitudeGraph();
-        JPanel altChartPanel = aGraph.createChartPanel();
-        taGraph = new AccelerationGraph();
-        JPanel taChartPanel = taGraph.createChartPanel();
-        gGraph = new GpsGraph();
-        JPanel gpsChartPanel = gGraph.getMap();
-
-        // adding graphs into panels
-        altPanel.add(altChartPanel, BorderLayout.CENTER);
-        altPanel.setBackground(Color.black);
-        altPanel.validate();
-        accelPanel.add(taChartPanel, BorderLayout.CENTER);
-        accelPanel.setBackground(Color.black);
-        accelPanel.validate();
-        gpsPanel.add(gpsChartPanel, BorderLayout.CENTER);
-        gpsPanel.setBackground(Color.black);
-        gpsPanel.validate();
+        model = new GUIModel();
 
         // reset all graphs on click
-        gui.getResetBtn().addActionListener(new ActionListener() {
+        model.getGui().getResetBtn().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                aGraph.clear();
-                taGraph.clear();
-                gGraph.clear();
+                model.getaGraph().clear();
+                model.getTaGraph().clear();
+                model.getgGraph().clear();
             }
         } );
 
         // fit all markers on the gps graph on click
-        gui.getFitMarkersBtn().addActionListener(new ActionListener() {
+        model.getGui().getFitMarkersBtn().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                gGraph.seeMakers();
+                model.getgGraph().seeMakers();
             }
         } );
 
@@ -151,12 +111,14 @@ public class ControllerGUI extends JFrame {
         alterFiltered[10] = Gy + "";
         alterFiltered[11] = Gz + "";
 
+        // testing purpose
         longitudeTest += 0.005;
         }catch (Exception e){
             System.out.println("error was caught");
         }finally {
+
             // updating the graph components
-            gui.updateLabels(alterFiltered);
+            model.getGui().updateLabels(alterFiltered);
             updateAltitudeGraph(seconds, altValue);
             updateAccelerationGraph(seconds,totalA);
             // TODO actual value of GPS
@@ -166,18 +128,18 @@ public class ControllerGUI extends JFrame {
 
     // update alt graph
     public void updateAltitudeGraph(double time, double alt){
-        aGraph.updateAltitudeGraph(time,alt);
-        altPanel.repaint();
+        model.getaGraph().updateAltitudeGraph(time,alt);
+        // model.getAltPanel().repaint();
     }
 
     // update total acceleration graph
     public void updateAccelerationGraph(double time, double ta){
-        taGraph.updateAccelerationGraph(time,ta);
-        accelPanel.repaint();
+        model.getTaGraph().updateAccelerationGraph(time,ta);
+        // model.getAccelPanel().repaint();
     }
 
     // update map marker
     public void updateMapMark(double lat, double lon) {
-        gGraph.updateGpsGraph(lat,lon);
+        model.getgGraph().updateGpsGraph(lat,lon);
     }
 }

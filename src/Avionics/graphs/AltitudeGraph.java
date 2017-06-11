@@ -66,6 +66,7 @@ public class AltitudeGraph {
         series1.add(time,ta);
     }
 
+    // clear the dataset
     public void clear(){
         series1.clear();
     }

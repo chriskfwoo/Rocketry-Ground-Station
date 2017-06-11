@@ -61,6 +61,7 @@ public class AccelerationGraph {
         series1.add(time,ta);
     }
 
+    // clear the dataset
     public void clear(){
         series1.clear();
     }

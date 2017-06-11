@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class JSSC {
     private static SerialPort serialPort;
-    private static ControllerGUI view;
+    private static GUIController gui;
     private static File file;
     private static FileWriter writer;
     private static PrintWriter pw;
@@ -77,7 +77,7 @@ public class JSSC {
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN |
                     SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
-            view = new ControllerGUI();
+            gui = new GUIController();
 
             serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
 
@@ -105,7 +105,7 @@ public class JSSC {
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    view.unfiltered(toProcess);
+                                    gui.unfiltered(toProcess);
                                 }
                             });
 

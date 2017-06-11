@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TestDriver {
 
-    private static ControllerGUI view;
+    private static GUIController gui;
     private static Date date= Calendar.getInstance().getTime();
 
     // test variables
@@ -26,7 +26,7 @@ public class TestDriver {
     private static PrintWriter pw;
     public static void main(String[] args) {
 
-        view = new ControllerGUI();
+        gui = new GUIController();
 
         // for production
          File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
@@ -34,7 +34,6 @@ public class TestDriver {
 
         // for testing
         //file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
-;
 
         try {
             writer = new FileWriter(file, true);
@@ -42,6 +41,7 @@ public class TestDriver {
             e.printStackTrace();
         }
         pw = new PrintWriter(writer);
+
         EventQueue.invokeLater(() -> {
             try {
                 testing();
@@ -59,7 +59,9 @@ public class TestDriver {
             testString = testTime+","+Integer.toString(testInt++)+",99325,"+Integer.toString(testAlt)+",4529.8360#N#7334.74137#W,101#101#101,101#101#101";
             testTime+=1000;
             System.out.println(testString);
-            view.unfiltered(testString);
+
+            // parse to GUI
+            gui.unfiltered(testString);
             pw.write(testString+"\n");
             pw.close();
         };

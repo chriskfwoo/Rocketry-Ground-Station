@@ -26,14 +26,17 @@ public class GpsGraph extends JFrame {
         return map;
     }
 
+    // update gps markers
     public void updateGpsGraph(double lat, double lon){
         map.addMapMarker(new MapMarkerDot(lat,lon));
     }
 
+    // fit all the markers on the graph
     public void seeMakers(){
         map.setDisplayToFitMapElements(true, true, true);
     }
 
+    // clear the graph
     public void clear(){
         map.removeAllMapMarkers();
     }

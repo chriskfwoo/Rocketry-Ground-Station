@@ -47,7 +47,7 @@ public class GUI {
         groundStation.getContentPane().add(mainPanel);
         groundStation.setBounds(100, 100, 1250, 850);
         groundStation.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        logoLabel.setIcon(new ImageIcon(getClass().getResource("res/logo2.png")));
+        logoLabel.setIcon(new ImageIcon(getClass().getResource("res/logo.png")));
         canadalogo.setIcon(new ImageIcon(getClass().getResource("res/canada.png")));
         mauriceLogo.setIcon(new ImageIcon(getClass().getResource("res/maurice.png")));
         groundStation.setVisible(true);

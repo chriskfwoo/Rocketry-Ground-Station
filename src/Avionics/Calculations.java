@@ -15,7 +15,6 @@ public class Calculations {
 
     public static double calculateAcceleration(int value){
         // -32768 to 32767
-        // For accel : (32/(2^12))*(x+32768)-16
 
         double answer = value *  0.012;
         return answer;
