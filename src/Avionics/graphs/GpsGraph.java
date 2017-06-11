@@ -13,7 +13,7 @@ public class GpsGraph extends JFrame {
     private final JMapViewer map = new JMapViewer();
 
     public GpsGraph(){
-//        map.setDisplayPosition(45,-73,12);
+    // map.setDisplayPosition(45,-73,12);
     }
 
     // TODO OFFLINE TILES
