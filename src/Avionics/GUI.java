@@ -2,6 +2,7 @@ package Avionics;
 
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Initializing the GUI
@@ -33,9 +34,9 @@ public class GUI {
     private JLabel timeLabel;
     private JLabel tempLabel;
     private JPanel logoPanel;
-    private JPanel buttonPanel;
     private JLabel spaceLogo;
     private JLabel rocketLogo;
+    private JPanel tempGraph;
 
 
     public GUI() {
@@ -65,6 +66,10 @@ public class GUI {
 
     public JPanel getAccelerationGraph(){
         return accelerationGraph;
+    }
+
+    public JPanel getTempGraph(){
+        return tempGraph;
     }
 
     public void updateLabels(String[] alterPacket){

@@ -13,7 +13,7 @@ public class GUIController extends JFrame {
     private static GUIModel model;
 
     // variables for GUI
-    private double totalA,seconds,altValue,accelx,accely,accelz;
+    private double totalA,seconds,altValue,accelx,accely,accelz,temp;
 
     // string array to display GUI labels
     private static String[] alterFiltered;
@@ -57,6 +57,7 @@ public class GUIController extends JFrame {
         accelx = Double.parseDouble(alterFiltered[4]);
         accely = Double.parseDouble(alterFiltered[5]);
         accelz = Double.parseDouble(alterFiltered[6]);
+        temp = Double.parseDouble(alterFiltered[7]);
         altValue = Double.parseDouble(alterFiltered[3]);
 
         // GUI Model to calculate total acceleration
@@ -74,6 +75,7 @@ public class GUIController extends JFrame {
             view.updateGUILabels(alterFiltered);
             view.updateAltitudeGraph(seconds, altValue);
             view.updateAccelerationGraph(seconds,totalA);
+            view.updateTempGraph(seconds,temp);
         }
     }
 }

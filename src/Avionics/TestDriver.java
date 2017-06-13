@@ -17,7 +17,7 @@ public class TestDriver {
     private static Date date= Calendar.getInstance().getTime();
 
     // test variables
-    private static int testInt = 2500;
+    private static int testInt = 1;
     private static int testTime = 1000;
     private static int testAlt = 1000;
     private static String testString;
@@ -60,9 +60,10 @@ public class TestDriver {
         Runnable data = () -> {
             // <msTick>,<pitot>,<bar>,<gpsAlt>,          <gpsPos>,            <accel>,         <temp>
             //  950,     2048,   99325, 167.8,   4529.8360#N#7334.74137#W,  101#101#101,     50
+            testString = testTime+","+testInt+",99325,"+Integer.toString(testAlt)+",4529.8360#N#7334.74137#W,101#101#101,"+testInt;
             testAlt += 50;
-            testString = testTime+","+Integer.toString(testInt++)+",99325,"+Integer.toString(testAlt)+",4529.8360#N#7334.74137#W,101#101#101,50";
             testTime+=1000;
+            testInt = testInt + 1;
             System.out.println(testString);
 
             // GUI controller
