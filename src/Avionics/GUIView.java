@@ -2,7 +2,6 @@ package Avionics;
 
 import Avionics.graphs.AccelerationGraph;
 import Avionics.graphs.AltitudeGraph;
-import Avionics.graphs.GpsGraph;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,11 +14,9 @@ public class GUIView {
     private GUI gui;
     private AccelerationGraph taGraph;
     private AltitudeGraph aGraph;
-    private GpsGraph gGraph;
 
     private JPanel altPanel;
     private JPanel accelPanel;
-    private JPanel gpsPanel;
 
     public GUIView(){
 
@@ -27,20 +24,16 @@ public class GUIView {
         gui = new GUI();
         altPanel = gui.getAltitudeGraph();
         accelPanel = gui.getAccelerationGraph();
-        gpsPanel = gui.getGpsPanel();
 
         // setting layout for panels
         altPanel.setLayout(new java.awt.BorderLayout());
         accelPanel.setLayout(new java.awt.BorderLayout());
-        gpsPanel.setLayout(new java.awt.BorderLayout());
 
         // creating graphs for panels
         aGraph = new AltitudeGraph();
         JPanel altChartPanel = aGraph.createChartPanel();
         taGraph = new AccelerationGraph();
         JPanel taChartPanel = taGraph.createChartPanel();
-        gGraph = new GpsGraph();
-        JPanel gpsChartPanel = gGraph.getMap();
 
         // adding graphs into panels
         altPanel.add(altChartPanel, BorderLayout.CENTER);
@@ -49,9 +42,7 @@ public class GUIView {
         accelPanel.add(taChartPanel, BorderLayout.CENTER);
         accelPanel.setBackground(Color.black);
         accelPanel.validate();
-        gpsPanel.add(gpsChartPanel, BorderLayout.CENTER);
-        gpsPanel.setBackground(Color.black);
-        gpsPanel.validate();
+
     }
 
     // update gui labels
@@ -64,21 +55,10 @@ public class GUIView {
         gui.getResetBtn().addActionListener(listenerForResetBtn);
     }
 
-    // listener to fit all gps markers on gps graph
-    public void addFitListener(ActionListener listenForFitBtn){
-        gui.getFitMarkersBtn().addActionListener(listenForFitBtn);
-    }
-
     // clear all graphs dataset
     public void clearAllGraphs(){
         aGraph.clear();
         taGraph.clear();
-        gGraph.clear();
-    }
-
-    // fit all gps markers on gps graph
-    public void fitGpsMarkers(){
-        gGraph.seeMakers();
     }
 
     // update alt graph
@@ -91,11 +71,6 @@ public class GUIView {
     public void updateAccelerationGraph(double time, double ta){
         taGraph.updateAccelerationGraph(time,ta);
         // accelPanel.repaint();
-    }
-
-    // update map marker
-    public void updateMapMark(double lat, double lon) {
-        gGraph.updateGpsGraph(lat,lon);
     }
 
 }

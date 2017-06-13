@@ -58,10 +58,10 @@ public class TestDriver {
 
     public static void testing(){
         Runnable data = () -> {
-            // <msTick>,<pitot>,<bar>,<gpsAlt>,          <gpsPos>,            <accel>,         <gyro>
-            //  950,     2048,   99325, 167.8,   4529.8360#N#7334.74137#W,  101#101#101,     101#101#101
+            // <msTick>,<pitot>,<bar>,<gpsAlt>,          <gpsPos>,            <accel>,         <temp>
+            //  950,     2048,   99325, 167.8,   4529.8360#N#7334.74137#W,  101#101#101,     50
             testAlt += 50;
-            testString = testTime+","+Integer.toString(testInt++)+",99325,"+Integer.toString(testAlt)+",4529.8360#N#7334.74137#W,101#101#101,101#101#101";
+            testString = testTime+","+Integer.toString(testInt++)+",99325,"+Integer.toString(testAlt)+",4529.8360#N#7334.74137#W,101#101#101,50";
             testTime+=1000;
             System.out.println(testString);
 

@@ -20,9 +20,6 @@ public class GUI {
     private JLabel altitudeLabel;
     private JLabel latitudeLabel;
     private JLabel longitudeLabel;
-    private JLabel gyroXLabel;
-    private JLabel gyroYLabel;
-    private JLabel gyroZLabel;
     private JPanel dataPanel;
     private JPanel altitudeGraph;
     private JPanel accelerationGraph;
@@ -31,11 +28,14 @@ public class GUI {
     private JLabel pitotLabel;
     private JLabel baroLabel;
     private JLabel canadalogo;
-    private JButton fitMarkersBtn;
     private JLabel mauriceLogo;
     private JButton resetBtn;
     private JLabel timeLabel;
-    private JPanel gpsMapHelper;
+    private JLabel tempLabel;
+    private JPanel logoPanel;
+    private JPanel buttonPanel;
+    private JLabel spaceLogo;
+    private JLabel rocketLogo;
 
 
     public GUI() {
@@ -47,16 +47,13 @@ public class GUI {
         groundStation.getContentPane().add(mainPanel);
         groundStation.setBounds(100, 100, 1250, 850);
         groundStation.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        logoLabel.setIcon(new ImageIcon(getClass().getResource("res/logo.png")));
         canadalogo.setIcon(new ImageIcon(getClass().getResource("res/canada.png")));
-        mauriceLogo.setIcon(new ImageIcon(getClass().getResource("res/maurice.png")));
+        spaceLogo.setIcon(new ImageIcon(getClass().getResource("res/logo.png")));
+        rocketLogo.setIcon(new ImageIcon(getClass().getResource("res/maurice.png")));
         groundStation.setVisible(true);
 
     }
 
-    public JButton getFitMarkersBtn(){
-        return fitMarkersBtn;
-    }
 
     public JButton getResetBtn(){
         return resetBtn;
@@ -70,13 +67,6 @@ public class GUI {
         return accelerationGraph;
     }
 
-    public JPanel getGpsPanel(){
-        return gpsPanel;
-    }
-    public JPanel getGpsMapHelper() {
-        return gpsMapHelper;
-    }
-
     public void updateLabels(String[] alterPacket){
 
         // time
@@ -87,17 +77,12 @@ public class GUI {
         baroLabel.setText(alterPacket[2]);
         // gpsAlt
         altitudeLabel.setText(alterPacket[3]);
-        // gpsPos
-        latitudeLabel.setText(alterPacket[4]);
-        longitudeLabel.setText(alterPacket[5]);
         // accel
-        accelXLabel.setText(alterPacket[6]);
-        accelYLabel.setText(alterPacket[7]);
-        accelZLabel.setText(alterPacket[8]);
-        // gyro
-        gyroXLabel.setText(alterPacket[9]);
-        gyroYLabel.setText(alterPacket[10]);
-        gyroZLabel.setText(alterPacket[11]);
+        accelXLabel.setText(alterPacket[4]);
+        accelYLabel.setText(alterPacket[5]);
+        accelZLabel.setText(alterPacket[6]);
+        // temperature
+        tempLabel.setText(alterPacket[7]);
     }
 }
 
