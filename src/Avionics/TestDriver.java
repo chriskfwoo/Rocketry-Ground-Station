@@ -58,7 +58,7 @@ public class TestDriver {
 
     public static void testing(){
         Runnable data = () -> {
-            // <msTick>,<pitot>,<bar>,<gpsAlt>,          <gpsPos>,            <accel>,         <temp>
+            // <msTick>,<pitot>,<bar>,<gpsAlt>,          <gpsPos>,            <accel>,      <temp>
             //  950,     2048,   99325, 167.8,   4529.8360#N#7334.74137#W,  101#101#101,     50
             testString = testTime+","+testInt+",99325,"+Integer.toString(testAlt)+",4529.8360#N#7334.74137#W,101#101#101,"+testInt;
             testAlt += 50;

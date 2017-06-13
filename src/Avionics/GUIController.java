@@ -43,8 +43,8 @@ public class GUIController extends JFrame {
     public void unfiltered (String unfiltered){
 
         /*** format of the packet
-         0          1      2      3                4    5              6  7  8          9 10  11
-         <msTick>,<pitot>,<bar>,<gpsAlt>,          <gpsPos>,            <accel>,         <gyro>
+         0          1      2      3           4 5        6  7           8
+         <msTick>,<pitot>,<bar>,<gpsAlt>,   <gpsPos>,    <accel>,    <temp>
          */
 
         try{
@@ -65,7 +65,6 @@ public class GUIController extends JFrame {
 
         // testing purpose
         longitudeTest += 0.005;
-            System.out.println(alterFiltered[6]);
 
         }catch (Exception e){
             System.out.println(e);
