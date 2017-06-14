@@ -12,8 +12,8 @@ public class GUIModel {
     }
 
     // variables for GUI
-    private static String timestamp, pitot, barometer, altitude,latitude,longitude,accelx,accely,accelz,temp;
-    private static double seconds;
+    private static String timestamp, pitot, barometer, accelx,accely,accelz,temp;
+    private static double seconds, altitude;
 
     public static double calculateAcceleration(int value){
         // range: -32768 to 32767
@@ -29,9 +29,18 @@ public class GUIModel {
     }
 
     // TODO formula for altitude
-    public static double calculateAltitude(int baro, double temp){
-        double answer = 2;
-        return answer;
+    public static double calculateAltitude(double baro, double temp){
+
+        // 44330.77 ( 1- (p/p0)^0.1902632) + offset, offset default is zero
+        double P = baro/101326;
+        double ppower = Math.pow(P,0.1902632);
+        double oneminusppower = 1 - ppower;
+        double answer = 44220.77 * oneminusppower;
+
+        // meter to feet
+        double feet = answer * 3.28084;
+
+        return feet;
     }
 
     // parse the string to return a string array to display on GUI
@@ -83,8 +92,8 @@ public class GUIModel {
             alterFiltered[7] = temp;
 
             // TODO get alitude with barometer and temp
-            altitude = filtered[3];
-            alterFiltered[3] = altitude;
+            altitude = calculateAltitude(Double.parseDouble(barometer),Double.parseDouble(temp));
+            alterFiltered[3] = String.format("%.3f",altitude);
 
             // return string array to display on GUI
             return  alterFiltered;

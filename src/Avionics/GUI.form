@@ -231,7 +231,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-8388608"/>
-                      <text value="Altitude:"/>
+                      <text value="Altitude (ft):"/>
                     </properties>
                   </component>
                   <component id="4dbc9" class="javax.swing.JLabel">
@@ -308,7 +308,7 @@
                       <background color="-8388608"/>
                       <font name="Monospaced" size="20"/>
                       <foreground color="-8388608"/>
-                      <text value="Temperature"/>
+                      <text value="Temperature (C)"/>
                     </properties>
                   </component>
                   <component id="3e6a9" class="javax.swing.JLabel" binding="tempLabel">

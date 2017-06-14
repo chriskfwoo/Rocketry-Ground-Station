@@ -50,7 +50,6 @@ public class AccelerationGraph {
     public  XYDataset createDataset() {
         XYSeriesCollection dataset = new XYSeriesCollection();
         series1 = new XYSeries("Object 1");
-        series1.add(0, 0);
         dataset.addSeries(series1);
 
         return dataset;

@@ -67,7 +67,7 @@ public class GUIController extends JFrame {
         longitudeTest += 0.005;
 
         }catch (Exception e){
-            System.out.println(e);
+            System.out.println("catch parsing error");
         }finally {
 
             // updating GUI view

@@ -49,8 +49,7 @@ public class AltitudeGraph {
     // creating the dataset
     public  XYDataset createDataset() {
         XYSeriesCollection dataset = new XYSeriesCollection();
-        series1 = new XYSeries("Altitude");
-        series1.add(0, 0);
+        series1 = new XYSeries("Altitude (ft)");
         dataset.addSeries(series1);
 
         // to add another dataset

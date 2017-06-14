@@ -25,7 +25,7 @@ public class TemperatureGraph {
         // creating the graph
         String chartTitle = "";
         String xAxisLabel = "Time(s)";
-        String yAxisLabel = "Temperature";
+        String yAxisLabel = "Temperature (C)";
 
         XYDataset dataset = createDataset();
         JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
@@ -38,7 +38,7 @@ public class TemperatureGraph {
         plot.setBackgroundPaint(new Color(204,204,204));
         ValueAxis yAxis = plot.getRangeAxis();
         ValueAxis xAxis = plot.getDomainAxis();
-        yAxis.setRange(-100, 100);
+        yAxis.setRange(-20, 50);
         Font font = new Font("Monospace", Font.PLAIN, 12);
         yAxis.setTickLabelFont(font);
         xAxis.setTickLabelFont(font);
@@ -50,7 +50,6 @@ public class TemperatureGraph {
     public  XYDataset createDataset() {
         XYSeriesCollection dataset = new XYSeriesCollection();
         series1 = new XYSeries("Object 1");
-        series1.add(0, 0);
         dataset.addSeries(series1);
 
         return dataset;

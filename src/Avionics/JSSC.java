@@ -3,10 +3,7 @@ package Avionics;
 import jssc.*;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
@@ -20,29 +17,10 @@ public class JSSC {
     private static SerialPort serialPort;
     private static GUIController guiController;
     private static File file;
-    private static FileWriter writer;
-    private static PrintWriter pw;
+    private static PrintWriter writer;
     private static Date date= Calendar.getInstance().getTime();
 
     public static void main(String[] args) {
-
-        /**
-         * writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
-         */
-
-        // for production saved at location of executable JAR
-        File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        file = new File(jarFile.getParentFile().getParent(), "/logs/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
-
-        // for testing
-        //file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
-
-        try {
-            writer = new FileWriter(file, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        pw = new PrintWriter(writer);
 
         // getting serial ports list into the array
         String[] portNames = SerialPortList.getPortNames();
@@ -105,15 +83,29 @@ public class JSSC {
                             String toProcess = message.toString();
                             System.out.println(toProcess);
 
-                            // write to file
-                            pw.write(toProcess+"\n");
-                            pw.close();
+                            /**
+                             * writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
+                             */
+                            // for production saved at location of executable JAR
+                             File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+                             file = new File(jarFile.getParentFile().getParent(), "/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+
+
+                            // testing
+                            //file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+                            try {
+                                writer = new PrintWriter(new FileOutputStream(file,true));
+                            } catch (FileNotFoundException e) {
+                                System.out.println("can't write to file");
+                            }
 
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 // GUI Controller
                                 public void run() {
                                     guiController.unfiltered(toProcess);
+                                    writer.write(toProcess+"\n");
+                                    writer.close();
                                 }
                             });
 
