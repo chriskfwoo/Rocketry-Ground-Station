@@ -83,9 +83,9 @@ public class GUIModel {
             double Ax = calculateAcceleration(Integer.parseInt(accelx));
             double Ay = calculateAcceleration(Integer.parseInt(accely));
             double Az = calculateAcceleration(Integer.parseInt(accelz));
-            alterFiltered[4] = String.format("%.3f", Ax);
+            alterFiltered[6] = String.format("%.3f", Ax);
             alterFiltered[5] = String.format("%.3f", Ay);
-            alterFiltered[6] = String.format("%.3f", Az);
+            alterFiltered[4] = String.format("%.3f", Az);
 
             // temp
             temp = filtered[6];

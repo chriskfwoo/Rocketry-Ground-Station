@@ -49,7 +49,8 @@ public class TestDriver {
              */
 
              //File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-             //file = new File(jarFile.getParentFile().getParent(), "/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+             //file = new File(jarFile.getParentFile(), "/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+            //System.out.println(file);
 
             // for testing
              file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");

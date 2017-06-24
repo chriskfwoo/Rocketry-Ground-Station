@@ -2,9 +2,6 @@
   <artifact type="jar" name="Rocketry-Ground-Station:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Rocketry_Ground_Station_jar</output-path>
     <root id="archive" name="Rocketry-Ground-Station.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="Rocketry-Ground-Station" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jssc-2.8.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jfreechart-1.0.19.jar" path-in-jar="/" />
