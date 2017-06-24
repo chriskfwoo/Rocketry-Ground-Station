@@ -26,24 +26,6 @@ public class JSSC {
 
     public static void main(String[] args) {
 
-        /**
-         * writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
-         */
-
-        // for production saved at location of executable JAR
-        File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        file = new File(jarFile.getParentFile().getParent(), "/logs/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
-
-        // for testing
-        //file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
-
-        try {
-            writer = new FileWriter(file, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        pw = new PrintWriter(writer);
-
         // getting serial ports list into the array
         String[] portNames = SerialPortList.getPortNames();
 
@@ -100,6 +82,24 @@ public class JSSC {
 
                         // end of packet
                         if ( (b == '\r' || b == '\n') && message.length() > 0) {
+
+                            /**
+                             * writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
+                             */
+
+                            // for production saved at location of executable JAR
+                            File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+                            file = new File(jarFile.getParentFile().getParent(), "/logs/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+
+                            // for testing
+                            //file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+
+                            try {
+                                writer = new FileWriter(file, true);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            pw = new PrintWriter(writer);
 
                             // one packet
                             String toProcess = message.toString();
