@@ -25,6 +25,23 @@ public class TestDriver {
 
         guiController = new GUIController();
 
+        /**
+         * writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
+         */
+
+        //File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        //file = new File(jarFile.getParentFile(), "/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+        //System.out.println(file);
+
+        // for testing
+        file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
+
+        try {
+            writer = new PrintWriter(new FileOutputStream(file,true));
+        } catch (FileNotFoundException e) {
+            System.out.println("can't write to file");
+        }
+
         EventQueue.invokeLater(() -> {
             try {
                 testing();
@@ -43,23 +60,6 @@ public class TestDriver {
             testInt = testInt + 500;
             testTemp = testTemp + 1;
             System.out.println(testString);
-
-            /**
-             * writing to file -> data_logs_#dateday_#datehours_#datemins  , date = 0 = Sunday
-             */
-
-             //File jarFile = new File(TestDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-             //file = new File(jarFile.getParentFile(), "/data_logs_"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
-            //System.out.println(file);
-
-            // for testing
-             file = new File("./src/Avionics/logs/data_logs"+date.getDay()+"-"+date.getHours()+"-"+date.getMinutes()+".csv");
-
-            try {
-                writer = new PrintWriter(new FileOutputStream(file,true));
-            } catch (FileNotFoundException e) {
-                System.out.println("can't write to file");
-            }
 
             // GUI controller
             guiController.unfiltered(testString);
